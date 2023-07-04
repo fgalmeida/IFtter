@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+      <div class="max-w-3xl mx-auto bg-white rounded shadow-md">
+        <div class="p-4">
+          <h2 class="text-2xl font-semibold mb-4">Feed</h2>
+          <div class="p-4 border-t border-gray-200">
+            <h2 class="text-xl font-semibold mb-4">Criar um novo post</h2>
+            <form method="POST" action="/post/add">
+              <input type="text" name="author" id="author" required hidden value="<%= user._id %>" />
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="thumb">Thumbnail</label>
+                <input
+                  type="file"
+                  name="thumb"
+                  id="thumb"
+                  class="border-gray-400 border-2 p-2 w-full"
+                  accept="image/*"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Título</label>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  class="border-gray-400 border-2 p-2 w-full"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Descrição</label>
+                <textarea
+                  name="description"
+                  id="description"
+                  class="border-gray-400 border-2 p-2 w-full"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Conteúdo</label>
+                <textarea
+                  name="content"
+                  id="content"
+                  class="border-gray-400 border-2 p-2 w-full"
+                  rows="6"
+                  required
+                ></textarea>
+              </div>
+              <div class="flex justify-end">
+                <button
+                  type="submit"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Criar Post
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Lista de posts -->
+          <div class="space-y-4">
+            <% posts.forEach(function(post) { %>
+            <div class="bg-white rounded-lg shadow-md p-4">
+              <div class="flex items-center mb-2">
+                <img src="<%= post.thumb %>" alt="Thumbnail" class="w-8 h-8 rounded-full mr-2" />
+                <p class="text-sm font-semibold"><%= post.author %></p>
+              </div>
+              <h3 class="text-lg font-semibold mb-2"><%= post.title %></h3>
+              <p class="text-gray-600 mb-2"><%= post.description %></p>
+              <p><%= post.content %></p>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
