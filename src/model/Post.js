@@ -1,17 +1,16 @@
-const db = require("../config/connection");
+const connection = require("../config/connection");
 
-let PostSchema = new db.Schema(
+let PostSchema = new connection.Schema(
   {
-    thumb: String,
     slug: String,
     title: String,
     description: String,
     content: String,
-    author: { type: db.Schema.Types.ObjectId, ref: "User" },
+    author: String,
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
   }
 );
 
-module.exports = db.model("Post", PostSchema);
+module.exports = connection.model("Post", PostSchema);

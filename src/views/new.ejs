@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", Helvetica, sans-serif;
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #eeeeee;
+      }
+
+      .form {
+        width: 100%;
+        height: auto;
+        max-width: 700px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 24px;
+      }
+
+      form {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 16px;
+      }
+
+      form div {
+        width: 100%;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        height: 45px;
+
+        border-radius: 4px;
+        outline: none;
+        border: none;
+
+        font-size: 14px;
+
+        background: #f4f4f4;
+        padding: 2px 24px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 45px;
+
+        border-radius: 4px;
+        outline: none;
+        border: none;
+
+        font-size: 14px;
+
+        background: #f4f4f4;
+        padding: 2px 24px;
+        padding-top: 16px;
+      }
+
+      button {
+        height: 45px;
+
+        border-radius: 4px;
+        outline: none;
+        border: none;
+
+        background: rgb(168 85 247);
+        color: #fff;
+
+        font-weight: bold;
+        font-size: 14px;
+
+        padding: 5px 24px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+
+      button:disabled {
+        background: rgba(168, 85, 247, 0.1);
+      }
+    </style>
+    <title>Novo Post</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form">
+        <h1>Adicionar post</h1>
+        <form method="post">
+          <div>
+            <input
+              required
+              placeholder="Titulo"
+              type="text"
+              name="title"
+              id="title"
+            />
+          </div>
+          <div>
+            <input
+              required
+              placeholder="Descrição"
+              type="text"
+              name="description"
+              id="descr"
+            />
+          </div>
+          <div>
+            <textarea
+              required
+              placeholder="Conteúdo"
+              name="content"
+              id="content"
+            ></textarea>
+          </div>
+          <div>
+            <input
+              required
+              placeholder="Autor"
+              type="text"
+              name="author"
+              id="author"
+            />
+          </div>
+          <div>
+            <button id="button" type="button" onclick="goToHome()">
+              Voltar
+            </button>
+            <button id="button" type="submit">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      function goToHome() {
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", Helvetica, sans-serif;
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        background-color: #eeeeee;
+
+        padding-bottom: 64px;
+      }
+
+      .header {
+        width: 70%;
+        height: 80px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 16px;
+      }
+
+      .header div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        gap: 16px;
+      }
+
+      .hero {
+        width: 70%;
+        height: 350px;
+
+        margin-top: 144px;
+        margin-bottom: 64px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero h1 {
+        color: #111111;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 36px;
+      }
+
+      .hero p {
+        width: 50%;
+        color: #444;
+
+        text-align: center;
+        margin-bottom: 36px;
+      }
+
+      .post {
+        width: 100%;
+        height: auto;
+        max-width: 50%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 8px;
+
+        padding: 36px 24px;
+        border-radius: 5px;
+
+        margin: 0px 24px;
+        margin-bottom: 24px;
+
+        background: rgb(245, 245, 245);
+
+        word-wrap: break-word;
+      }
+
+      .post a {
+        color: #222;
+
+        font-weight: bold;
+
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .post a:hover {
+        text-decoration: underline;
+        color: rgb(168 85 247);
+      }
+
+      .post h2,
+      h3,
+      h4,
+      li {
+        color: #111111;
+      }
+
+      .post ul {
+        margin-left: 16px;
+      }
+
+      .post blockquote {
+        border-left: 4px solid rgb(168 85 247);
+        padding: 5px 24px;
+        padding-right: 10px;
+        background: #eeeeee;
+        border-radius: 2px;
+        transition: 0.6s ease;
+      }
+
+      .post h1 {
+        color: #111111;
+        font-size: 28px;
+        font-weight: 600;
+      }
+
+      .post p {
+        color: #444;
+      }
+
+      .post span {
+        color: #555;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .author {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        gap: 24px;
+        margin-top: 12px;
+        margin-bottom: 8px;
+
+        font-size: 14px;
+      }
+
+      input[type="text"] {
+        width: 60%;
+        height: 45px;
+
+        border-radius: 4px;
+        outline: none;
+        border: none;
+
+        background: #f4f4f4;
+        padding: 2px 24px;
+      }
+
+      button {
+        height: 45px;
+
+        border-radius: 4px;
+        outline: none;
+        border: none;
+
+        background: rgb(168 85 247);
+        color: #fff;
+
+        font-weight: bold;
+        font-size: 14px;
+
+        padding: 5px 24px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+    </style>
+    <title><%= post.title %> | Blog</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <button type="button" onclick="goToHome()">Voltar</button>
+        <div>
+          <button type="button" onclick="goToEdit()">Editar</button>
+          <button type="button" onclick="deletePost()">Excluir</button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <h1><%= post.title %></h1>
+        <p><%= post.description %></p>
+        <span><%= moment(post.created_at).locale('pt-br').fromNow() %></span>
+      </div>
+
+      <div class="post"><%- post.content %></div>
+
+      <p class="author">
+        criado por <%= post.author %> - <%=
+        moment(post.updated_at).locale('pt-br').format("DD/MM/YYYY HH:MM:SS") %>
+      </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function goToHome() {
+        window.location.href = "/";
+      }
+
+      function goToEdit() {
+        window.location.href = "/post/edit/<%= post._id %>";
+      }
+
+      async function deletePost(id) {
+        const res = await axios.delete(`/post/del/<%= post._id %>`);
+
+        if (res.status == 200) {
+          window.location.href = "/";
+        }
+      }
+    </script>
+  </body>
+</html>
