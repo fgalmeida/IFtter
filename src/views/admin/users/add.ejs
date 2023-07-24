@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adicionar Usuário</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200 h-screen flex items-center justify-center">
+    <div class="max-w-xl bg-white shadow-md rounded px-8 py-6">
+      <h2 class="text-2xl font-semibold text-center mb-6">Adicionar Usuário</h2>
+      <form method="POST" action="/auth/register" enctype="multipart/form-data">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="avatar"
+            >Avatar</label
+          >
+          <input
+            type="file"
+            name="avatar"
+            id="avatar"
+            class="border-gray-400 border-2 p-2 w-full"
+            accept="image/*"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+            >Nome de Usuário</label
+          >
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="border-gray-400 border-2 p-2 w-full rounded-md"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email"
+            >Email</label
+          >
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="border-gray-400 border-2 p-2 w-full rounded-md"
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="password"
+            >Senha</label
+          >
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="border-gray-400 border-2 p-2 w-full rounded-md"
+            required
+          />
+        </div>
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Adicionar
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

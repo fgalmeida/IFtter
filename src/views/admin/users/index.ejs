@@ -1,0 +1,44 @@
+<%-include('header')-%>
+
+<form method="post">
+  <input
+    type="text"
+    name="pesquisar"
+    id="pesquisar"
+    placeholder="Digite aqui o que você deseja pesquisar!"
+  />
+  <input type="submit" value="Pesquisar" />
+</form>
+<table>
+  <tr>
+    <th>_id</th>
+    <th>Usuario</th>
+    <th>Email</th>
+    <th>Foto</th>
+    <th>Criação</th>
+    <th>Editar</th>
+    <th>Deletar</th>
+  </tr>
+
+  <% users.forEach(function(user){ %>
+  <tr>
+    <td><%=user._id %></td>
+    <td><%=user.username %></td>
+    <td><%=user.email %></td>
+    <td>
+      <img
+        style="width: 200px"
+        src="/fotos/<%=user.foto %>"
+        alt="Foto do Usuário"
+      />
+    </td>
+    <td><%=user.criacao %></td>
+    <td>
+      <a href="/user/edt/<%=user._id %>">Editar</a>
+    </td>
+    <td>
+      <a href="/user/del/<%=user._id %>">Deletar</a>
+    </td>
+  </tr>
+  <% }) %>
+</table>

@@ -1,0 +1,17 @@
+<h1>Edita Usuário</h1>
+<form method="post" enctype="multipart/form-data">
+  Id:
+  <input type="text" readonly name="id" id="id" value="<%= user._id%>" /><br />
+  Usuario:
+  <input
+    type="text"
+    name="username"
+    id="username"
+    value="<%= user.username%>"
+  /><br />
+  Email:
+  <input type="email" name="email" id="email" value="<%= user.email%>" /><br />
+  Senha: <input type="password" name="password" id="password" /><br />
+  Foto: <input type="file" name="avatar" id="avatar" /><br />
+  <input type="submit" value="Editar" />
+</form>
