@@ -67,8 +67,6 @@ router.post("/api/post/del/:id", async (req, res) => {
     .populate("author")
     .lean();
 
-  console.log(post)
-
   if (req.user.id == post.author._id) {
     await Post.findByIdAndDelete(req.params.id).then(function (post, err) {
       if (err) {
