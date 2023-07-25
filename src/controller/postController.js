@@ -45,7 +45,7 @@ function edit(req, res) {
       res.send(err);
     } else {
       post.content = req.body.content;
-      post.select = req.body.select;
+      post.category = req.body.select;
       post.slug = req.body.content
         .slice(0, 50)
         .normalize("NFD")
