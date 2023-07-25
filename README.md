@@ -1,6 +1,6 @@
 # Projeto MVC - IFtter
 
-Bem-vindo ao IFtter! Este projeto é um aplicativo web desenvolvido utilizando a arquitetura MVC (Model-View-Controller) e possui funcionalidades semelhantes às do Twitter. Ele permite que os usuários criem contas, postem ifeets.
+Bem-vindo ao IFtter! Este projeto é um aplicativo web desenvolvido utilizando a arquitetura MVC (Model-View-Controller) e possui funcionalidades semelhantes às do Twitter. Ele permite que os usuários criem contas, postem IFeets.
 
 ## Tecnologias Utilizadas
 
