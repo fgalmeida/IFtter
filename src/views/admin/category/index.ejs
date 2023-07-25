@@ -1,6 +1,6 @@
 <%-include('../header')-%>
 <head>
-  <title>Usuários | Admin</title>
+  <title>Categorias | Admin</title>
   <link
     href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
     rel="stylesheet"
@@ -20,30 +20,21 @@
   <table class="min-w-full bg-white">
     <thead class="bg-gray-800 text-white">
       <tr>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Avatar</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">_id</th>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Usuário</th>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Email</td>
+        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nome</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Criado em</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Editar</td>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Deletar</td>
       </tr>
     </thead>
     <tbody class="bg-transparent text-gray-300">
-      <% users.forEach(function(user){ %>
+      <% categories.forEach(function(category){ %>
       <tr class="bg-gray-700">
-        <td class="text-left py-3 px-4">
-          <img
-            style="width: 150px; height: 150px"
-            src="/avatars/<%=user.avatar %>"
-            alt="Foto Perfil"/>
-        </td>
-        <td class="text-left py-3 px-4"><%=user._id %></td>
-        <td class="text-left py-3 px-4"><%=user.username %></td>
-        <td class="text-left py-3 px-4"><%=user.email %></td>
-        <td class="text-left py-3 px-4"><%=user.created_at %></td>
-        <td class="text-left py-3 px-4"><a href="/admin/user/edit/<%=user._id %>">Editar</a></td>
-        <td class="text-left py-3 px-4"><form method="post" action="/admin/user/del/<%=user._id %>"><button type="submit">Deletar</button></form></td>
+        <td class="text-left py-3 px-4"><%= category._id %></td>
+        <td class="text-left py-3 px-4"><%= category.name %></td>
+        <td class="text-left py-3 px-4"><%= category.created_at %></td>
+        <td class="text-left py-3 px-4"><a href="/admin/category/edit/<%=category._id %>">Editar</a></td>
+        <td class="text-left py-3 px-4"><form method="post" action="/admin/category/del/<%=category._id %>"><button type="submit">Deletar</button></form></td>
       </tr>
       <% }) %>
     </tbody>

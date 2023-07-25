@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Categoria | Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    class="w-full h-screen px-6 flex flex-row items-center justify-center text-white gap-6 xl:px-64"
+    style="background-color: #15202b"
+  >
+    <main class="flex flex-col gap-6 py-5 px-4" style="width: 60%">
+      <form method="post" action="/admin/category/edit/<%= category._id %>">
+          <div class="flex gap-4">
+            <input
+            id="name"
+            name="name"
+            class="bg-transparent text-gray-400 font-medium text-lg w-full outline-none"
+            placeholder="Nome para sua categoria"
+            required
+            value="<%= category.name %>"
+            ></input>
+          </div>
+
+          <div class="flex-1">
+            <button
+              type="submit"
+              class="bg-blue-400 hover:bg-blue-500 mt-5 text-white font-bold py-2 px-8 rounded-full mr-8 float-right"
+            >
+              Editar
+            </button>
+          </div>
+        </div>
+        <% if(message) { %>
+        <p class="text-red-400 text-sm mt-4"><%= message %></p>
+        <% } %>
+      </form>
+    </main>
+  </body>
+</html>

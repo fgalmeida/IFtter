@@ -1,6 +1,6 @@
 <%-include('../header')-%>
 <head>
-  <title>Usuários | Admin</title>
+  <title>Posts | Admin</title>
   <link
     href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
     rel="stylesheet"
@@ -20,30 +20,27 @@
   <table class="min-w-full bg-white">
     <thead class="bg-gray-800 text-white">
       <tr>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Avatar</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">_id</th>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Usuário</th>
-        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Email</td>
+        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Slug</th>
+        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Conteudo</td>
+        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Autor</th>
+        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Categoria</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Criado em</th>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Editar</td>
         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Deletar</td>
       </tr>
     </thead>
     <tbody class="bg-transparent text-gray-300">
-      <% users.forEach(function(user){ %>
+      <% posts.forEach(function(post){ %>
       <tr class="bg-gray-700">
-        <td class="text-left py-3 px-4">
-          <img
-            style="width: 150px; height: 150px"
-            src="/avatars/<%=user.avatar %>"
-            alt="Foto Perfil"/>
-        </td>
-        <td class="text-left py-3 px-4"><%=user._id %></td>
-        <td class="text-left py-3 px-4"><%=user.username %></td>
-        <td class="text-left py-3 px-4"><%=user.email %></td>
-        <td class="text-left py-3 px-4"><%=user.created_at %></td>
-        <td class="text-left py-3 px-4"><a href="/admin/user/edit/<%=user._id %>">Editar</a></td>
-        <td class="text-left py-3 px-4"><form method="post" action="/admin/user/del/<%=user._id %>"><button type="submit">Deletar</button></form></td>
+        <td class="text-left py-3 px-4"><%=post._id %></td>
+        <td class="text-left py-3 px-4"><%=post.slug %></td>
+        <td class="text-left py-3 px-4"><%=post.content %></td>
+        <td class="text-left py-3 px-4"><%=post.author?.username %></td>
+        <td class="text-left py-3 px-4"><%=post.category?.name %></td>
+        <td class="text-left py-3 px-4"><%=post.created_at %></td>
+        <td class="text-left py-3 px-4"><a href="/admin/post/edit/<%=post._id %>">Editar</a></td>
+        <td class="text-left py-3 px-4"><form method="post" action="/admin/post/del/<%=post._id %>"><button type="submit">Deletar</button></form></td>
       </tr>
       <% }) %>
     </tbody>

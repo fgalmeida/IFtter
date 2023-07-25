@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Criar Post | Admin</title>
+    <title>Editar Post | IFtter</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
       rel="stylesheet"
@@ -14,10 +14,15 @@
     class="w-full h-screen px-6 flex flex-row items-center justify-center text-white gap-6 xl:px-64"
     style="background-color: #15202b"
   >
-
     <main class="flex flex-col gap-6 py-5 px-4" style="width: 60%">
-      <form method="post" action="/admin/post/add">
+      <form method="post" action="/api/post/edit/<%= post._id %>">
         <div class="flex">
+          <div class="m-2 w-10 py-1">
+            <img
+              class="inline-block h-10 w-10 rounded-full"
+              src="/avatars/<%= post.author.avatar %>"
+            />
+          </div>
           <div class="flex-1 px-2 pt-2 mt-2">
             <textarea
               id="content"
@@ -27,44 +32,12 @@
               cols="50"
               placeholder="O que está acontecendo?"
               required
-            ></textarea>
+            >
+<%= post.content %></textarea
+            >
           </div>
         </div>
-        <div class="flex gap-4">
-          <div class="flex flex-row items-center gap-4 mx-auto mt-5">
-            <label for="select" class="block text-gray-400 font-semibold"
-              >Autor</label
-            >
-            <div class="w-64">
-              <select
-                id="author"
-                name="author"
-                required
-                class="appearance-none w-full bg-gray-800 px-4 py-2 pr-8 rounded-full leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="" class="text-gray-400" disabled selected>
-                  Escolha uma opção
-                </option>
-                <% users.forEach(function(user) { %>
-                <option value="<%= user._id %>"><%= user.username %></option>
-                <% }) %>
-              </select>
-              <div
-                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-              >
-                <svg
-                  class="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.293 13.293a1 1 0 0 1-1.414-1.414L9 10.586V4a1 1 0 1 1 2 0v6.586l1.707 1.707a1 1 0 0 1-1.414 1.414l-2-2z"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
+        <div class="flex">
           <div class="flex flex-row items-center gap-4 mx-auto mt-5">
             <label for="select" class="block text-gray-400 font-semibold"
               >Categoria</label
@@ -79,11 +52,16 @@
                 <option value="" class="text-gray-400" disabled selected>
                   Escolha uma opção
                 </option>
-                <% categories.forEach(function(category) { %>
+                <% categories.forEach(function(category) { %> <%
+                if(post.category.name == category.name) { %>
+                <option selected value="<%= category._id %>">
+                  <%= category.name %>
+                </option>
+                <% } else { %>
                 <option value="<%= category._id %>">
                   <%= category.name %>
                 </option>
-                <% }) %>
+                <% } %> <% }) %>
               </select>
               <div
                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -106,13 +84,10 @@
               type="submit"
               class="bg-blue-400 hover:bg-blue-500 mt-5 text-white font-bold py-2 px-8 rounded-full mr-8 float-right"
             >
-              Criar
+              Editar
             </button>
           </div>
         </div>
-        <% if(message) { %>
-        <p class="text-red-400 text-sm mt-4"><%= message %></p>
-        <% } %>
       </form>
     </main>
   </body>

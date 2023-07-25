@@ -1,12 +1,31 @@
-const { User, Post } = require("../model/index");
-const crypt = require("bcrypt");
+const { User } = require("../model/index");
+const bcrypt = require('bcrypt');
 
-function getRegister(req, res) {
-  res.render('/register.ejs');
-}
+async function add(req, res) {
+  const { username, email, password } = req.body;
 
-function getLogin(req, res) {
-  res.render('/login.ejs');
+  try {
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.render('admin/users/add', { message: 'Este email já está em uso.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      avatar: req.file.filename,
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    res.redirect('/admin/user');
+  } catch (error) {
+    console.error('Erro ao registrar usuário:', error);
+    res.render('admin/users/add', { message: 'Erro ao registrar usuário.' });
+  }
 }
 
 function openEdit(req, res) {
@@ -14,59 +33,23 @@ function openEdit(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.render("admin/user/edit", { User: user });
-    }
-  });
-}
-
-async function login(req, res) {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email: email }).lean();
-  const pass = await crypt.compare(password, user.password);
-
-  if (pass == true) {
-    const posts = await Post.findById({}).lean();
-    res.render("dashboard", { user: user, posts: posts });
-  } else {
-    res.send("404");
-  }
-}
-
-async function register(req, res) {
-  const pass = await crypt.hash(req.body.password, 10);
-
-  let user = new User({
-    avatar: req.file.avatar,
-    username: req.body.username,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: pass.toString(),
-  });
-
-  user.save().then(function (user, err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.redirect("/auth/login");
+      res.render('admin/users/edt', { user, message: "" });
     }
   });
 }
 
 function edit(req, res) {
-  User.findById(req.params.id).then(function (user, err) {
+  User.findById(req.params.id).then(async function (user, err) {
     if (err) {
       res.send(err);
     } else {
-      const pass = CryptoJS.AES.encrypt(req.body.password, secret);
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      user.avatar = req.file.avatar;
+      user.avatar = req.file.filename;
       user.username = req.body.username;
-      user.firstName = req.body.firstName;
-      user.lastName = req.body.lastName;
       user.email = req.body.email;
-      user.password = pass.toString();
+      user.password = hashedPassword;
+
       user.save().then(function (user, err) {
         if (err) {
           res.send(err);
@@ -83,17 +66,17 @@ function list(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.render("admin/user/", { Users: users });
+      res.render('admin/users/index', { users: users });
     }
   });
 }
 
 function filter(req, res) {
-  User.find({ nome: new RegExp(req.body.pesquisar.split(" ").join(".*"), "ig") }).then(function (users, err) {
+  User.find({ username: new RegExp(req.body.search.split(" ").join(".*"), "ig") }).then(function (users, err) {
     if (err) {
       res.send(err);
     } else {
-      res.render("admin/user/", { Users: users });
+      res.render('admin/users/index', { users: users });
     }
   });
 }
@@ -103,19 +86,16 @@ function del(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.redirect("/admin/user/");
+      res.redirect("/admin/user");
     }
   });
 }
 
 module.exports = {
-  register,
-  login,
+  add,
+  openEdit,
   edit,
   list,
   filter,
   del,
-  openEdit,
-  getRegister,
-  getLogin,
 };

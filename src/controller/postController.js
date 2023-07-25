@@ -1,44 +1,88 @@
-const { Post } = require("../model/index");
+const { User, Post, Category } = require("../model/index");
 
-function create(req, res) {
-  // Criando um novo objeto Date
-  let post = new Post({
-    titulo: req.body.titulo,
-    texto: req.body.texto,
-    foto: req.file.filename,
-  });
+async function add(req, res) {
+  const { content, select, author } = req.body;
 
-  post.save().then(function (post, err) {
+  try {
+    const newPost = new Post({
+      author: author,
+      category: select,
+      content,
+      slug: content
+        .slice(0, 50)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, "-"),
+    });
+
+    await newPost.save();
+
+    res.redirect("/admin/post");
+  } catch (error) {
+    res.redirect("/admin/post");
+  }
+}
+
+async function openEdit(req, res) {
+  const categories = await Category.find({}).lean();
+
+  Post.findById(req.params.id).populate("author")
+    .populate("category").then(function (post, err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.render('admin/post/edt', { post, categories, message: "" });
+      }
+    });
+}
+
+function edit(req, res) {
+  Post.findById(req.params.id).then(async function (post, err) {
     if (err) {
       res.send(err);
     } else {
-      res.redirect("/post/add");
+      post.content = req.body.content;
+      post.select = req.body.select;
+      post.slug = req.body.content
+        .slice(0, 50)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, "-"),
+
+        post.save().then(function (post, err) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.redirect("/admin/post");
+          }
+        });
     }
   });
 }
 
 function list(req, res) {
-  Post.find({}).then(function (posts, err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.render("post/lst", {
-        Posts: posts,
-      });
-    }
-  });
+  Post.find({}).populate("author")
+    .populate("category").then(function (posts, err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.render('admin/post/index', { posts });
+      }
+    });
 }
 
 function filter(req, res) {
-  Post.find({
-    titulo: new RegExp(req.body.pesquisar.split(" ").join(".*"), "ig"),
-  }).then(function (posts, err) {
+  Post.find({ slug: new RegExp(req.body.search.split(" ").join(".*"), "ig") }).then(function (posts, err) {
     if (err) {
       res.send(err);
     } else {
-      res.render("post/lst", {
-        Posts: posts,
-      });
+      res.render('admin/post/index', { posts });
     }
   });
 }
@@ -48,47 +92,16 @@ function del(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.redirect("/post/lst");
-    }
-  });
-}
-
-function openEdit(req, res) {
-  Post.findById(req.params.id).then(function (post, err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.render("post/edt", {
-        Post: post,
-      });
-    }
-  });
-}
-
-function edit(req, res) {
-  Post.findById(req.params.id).then(function (post, err) {
-    if (err) {
-      res.send(err);
-    } else {
-      (post.titulo = req.body.titulo),
-        (post.texto = req.body.texto),
-        (post.foto = req.file.filename),
-        post.save().then(function (post, err) {
-          if (err) {
-            res.send(err);
-          } else {
-            res.redirect("/post/lst");
-          }
-        });
+      res.redirect("/admin/post");
     }
   });
 }
 
 module.exports = {
-  create,
-  list,
-  filter,
+  add,
   openEdit,
   edit,
+  list,
+  filter,
   del,
 };
