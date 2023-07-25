@@ -78,13 +78,14 @@ function list(req, res) {
 }
 
 function filter(req, res) {
-  Post.find({ slug: new RegExp(req.body.search.split(" ").join(".*"), "ig") }).then(function (posts, err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.render('admin/post/index', { posts });
-    }
-  });
+  Post.find({ slug: new RegExp(req.body.search.split(" ").join(".*"), "ig") }).populate("author")
+    .populate("category").then(function (posts, err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.render('admin/post/index', { posts });
+      }
+    });
 }
 
 function del(req, res) {
