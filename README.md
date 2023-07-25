@@ -23,7 +23,7 @@ Bem-vindo ao IFtter! Este projeto é um aplicativo web desenvolvido utilizando a
 ## Estrutura de Pastas
 
 ```
-index.js                 # Configuração principal do aplicativo
+app.js                 # Configuração principal do aplicativo
 README.md                # Documentação do projeto (você está aqui!)
 public/                  # Arquivos públicos (imagens, etc.)
 src/
